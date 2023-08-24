@@ -1,12 +1,12 @@
-package com.nyxcode.nyxcode;
+package com.nyxcode.compilador;
 
-import com.nyxcode.nyxcode.views.Principal;
+import com.nyxcode.compilador.views.Principal;
 
 /**
  *
  * @author DocSe
  */
-public class NyxCode {
+public class Compilador {
 
     public static void main(String[] args) {
         Principal v = new Principal();

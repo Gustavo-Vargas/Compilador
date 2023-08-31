@@ -22,13 +22,13 @@ public class Procesos {
     // Variables o Attributos
     Principal v;
     ArrayList<String> lineas;
-    ArrayList<String> elementos;
+    ArrayList<String> lexemas;
 
     // COnstructor o Constructores
     public Procesos(Principal v) {
         this.v = v;
         lineas = new ArrayList<>();
-        elementos = new ArrayList<>();
+        lexemas = new ArrayList<>();
     }
 
     // Metodos
@@ -61,6 +61,9 @@ public class Procesos {
             v.getTxtCode().append(linea + "\n");
         }
         procesaLineas();
+        for (String lexema : lexemas) {
+            System.out.println(lexema);
+        }
     }
 
     private void clean() {
@@ -71,17 +74,45 @@ public class Procesos {
     // Protected  Se puede usar en el mismo paquete
     protected void procesaLineas() {
         for (String linea : lineas) {
+            forLineas:
             for (int i = 0; i < linea.length(); i++) {
                 char c = linea.charAt(i);
+                String palabra;
                 if (Character.isLetter(c)) {
-                    String palabra = "";
+                    palabra = "";
                     while (Character.isLetterOrDigit(c) || c == '_') {
                         palabra += c;
-                        c = linea.charAt(++i);
+                        i++;
+                        if (i == linea.length()) {
+                            lexemas.add(palabra);
+                            continue forLineas;
+                        }
+                        c = linea.charAt(i);
                     }
-                    System.out.println(palabra);
+                    lexemas.add(palabra);
                 }
-
+                if (Character.isDigit(c)) {
+                    palabra = "";
+                    while (Character.isDigit(c)) {
+                        palabra += c;
+                        i++;
+                        if (i == linea.length()) {
+                            lexemas.add(palabra);
+                            continue forLineas;
+                        }
+                        c = linea.charAt(i);
+                    }
+                    lexemas.add(palabra);
+                }
+                if (c == '<' || c == '>' || c == '=') {
+                    palabra = "" + c;
+                    palabra += (i < linea.length() && linea.charAt(i + 1) == '=')
+                            ? linea.charAt(i + 1) : "";
+                    i++;
+                    // error
+                    lexemas.add(palabra);
+                }
+                lexemas.add(c+"");
             }
         }
     }

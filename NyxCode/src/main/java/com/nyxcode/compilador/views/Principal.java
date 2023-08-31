@@ -5,6 +5,7 @@
 package com.nyxcode.compilador.views;
 
 import com.nyxcode.compilador.controls.Procesos;
+import java.util.ArrayList;
 import javax.swing.JTextArea;
 
 /**
@@ -39,6 +40,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mnuOpen = new javax.swing.JMenuItem();
+        mnuClean = new javax.swing.JMenuItem();
         mnuClose = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -60,6 +62,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(mnuOpen);
+
+        mnuClean.setText("Limpiar");
+        mnuClean.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCleanActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuClean);
 
         mnuClose.setText("Cerrar");
         mnuClose.addActionListener(new java.awt.event.ActionListener() {
@@ -98,12 +108,16 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mnuOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuOpenActionPerformed
-        p.openFile();
+        ArrayList lineas = p.openFile();
     }//GEN-LAST:event_mnuOpenActionPerformed
 
     private void mnuCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCloseActionPerformed
         this.dispose();
     }//GEN-LAST:event_mnuCloseActionPerformed
+
+    private void mnuCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCleanActionPerformed
+        
+    }//GEN-LAST:event_mnuCleanActionPerformed
 
     public JTextArea getTxtCode() {
         return txtCode;
@@ -119,6 +133,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JMenuItem mnuClean;
     private javax.swing.JMenuItem mnuClose;
     private javax.swing.JMenuItem mnuOpen;
     private javax.swing.JTextArea txtCode;

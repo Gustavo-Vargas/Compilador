@@ -78,6 +78,7 @@ public class Procesos {
             for (int i = 0; i < linea.length(); i++) {
                 char c = linea.charAt(i);
                 String palabra;
+
                 if (Character.isLetter(c)) {
                     palabra = "";
                     while (Character.isLetterOrDigit(c) || c == '_') {
@@ -111,8 +112,14 @@ public class Procesos {
                     i++;
                     // error
                     lexemas.add(palabra);
+                    continue;
                 }
-                lexemas.add(c+"");
+                
+                if (c == '\n' || c == '\t' || c == ' ') {
+                    continue;
+                }
+                palabra = "" + c;
+                lexemas.add(palabra);
             }
         }
     }

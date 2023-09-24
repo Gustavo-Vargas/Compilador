@@ -23,8 +23,9 @@ public class Procesos {
     Principal v;
     ArrayList<String> lineas;
     ArrayList<String> lexemas;
+    
 
-    // COnstructor o Constructores
+    // Constructor o Constructores
     public Procesos(Principal v) {
         this.v = v;
         lineas = new ArrayList<>();
@@ -110,11 +111,10 @@ public class Procesos {
                     palabra += (i < linea.length() && linea.charAt(i + 1) == '=')
                             ? linea.charAt(i + 1) : "";
                     i++;
-                    // error
                     lexemas.add(palabra);
                     continue;
                 }
-                
+
                 if (c == '\n' || c == '\t' || c == ' ') {
                     continue;
                 }

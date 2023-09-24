@@ -33,6 +33,7 @@ public class Lexema {
         if (reservadas.contains(palabra.toLowerCase())) {
             return reservadas.indexOf(palabra.toLowerCase());
         }
+
         try {
             Integer.parseInt(palabra);
             return 100;

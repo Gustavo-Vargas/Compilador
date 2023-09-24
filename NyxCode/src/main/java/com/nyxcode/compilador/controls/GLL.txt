@@ -1,0 +1,75 @@
+	Gramatica Lineal por Izquierda (GLL)
+<Programa>::= <Bloque> .
+
+<Bloque>::= <BlqConst> <BlqVar> <BlqProc> <Proposicion>
+	<BlqConst>::= null
+	<BlqConst>::= const <CilcloConst> ; 
+	
+	<BlqVar>::= ε	
+	<BlqVar>::= var <CicloVar> ;
+	
+	<BlqProc>::= ε
+	<BlqProc>::= proced id ; <Bloque> ; <BlqProc>
+
+	<CilcloConst>::= id = num <AuxConst>
+	<AuxConst>::= ε
+	<AuxConst>::= , <CilcloConst>
+	
+	<CicloVar>::= id <AuxVar>
+	<AuxVar>::= , <CicloVar>
+	<AuxVar>::= ε
+
+
+<condicion>::= <expre> <operadores> <expre>
+	<operadores>::= == 
+	<operadores>::= != 
+	<operadores>::= < 
+	<operadores>::= > 
+	<operadores>::= <= 
+	<operadores>::= >=
+
+<proposicion>::= <inicio> 
+<proposicion>::= <idExpre> 
+<proposicion>::= <escribir> 
+<proposicion>::= <leer> 
+<proposicion>::= <llamar> 
+<proposicion>::= <cicloIf> 
+<proposicion>::= <cicloWhile> 
+<proposicion>::= <cicloFor>
+	<cicloFor>::= for id = <expre> <toDto> <expre> do <proposicion>
+	<inicio>::=  begin <BlqProc> end
+	<toDto>::=  to
+	<toDto>::=  dto
+	<cicloWhile>::=  while <condicion> do <proposicion>
+	<cicloIf>::=  if <condicion> then <proposicion>
+	<llamar>::=  call id
+	<leer>::=  read id
+	<escribir>::= write <idNum>
+	<idNum>::= id
+	<idNum>::= num
+	<idExpre>::=  id = <expre>
+	
+	<prop>::= <proposicion> <propSub>
+	<propSub>::= ε
+	<propSub>::= ; <prop>
+
+<expre>::= <termino> <expreSub>
+	<expreSub>::= <expreOpera> <expre>
+	<expreSub>::= ε
+
+	<expreOpera>::= + 
+	<expreOpera>::= -
+
+<termino>::= <factor> <terminoSub>
+	<terminoSub>::= <terminoOpera> <termino>
+	<terminoSub>::= ε
+
+	<terminoOpera>::= *
+	<terminoOpera>::= /
+
+<factor>::= ( <expre> )
+<factor>::= id
+<factor>::= num
+
+
+

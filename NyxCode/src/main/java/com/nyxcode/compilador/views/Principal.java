@@ -42,6 +42,10 @@ public class Principal extends javax.swing.JFrame {
         mnuOpen = new javax.swing.JMenuItem();
         mnuClean = new javax.swing.JMenuItem();
         mnuClose = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,7 +75,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(mnuClean);
 
-        mnuClose.setText("Cerrar");
+        mnuClose.setText("Salir");
         mnuClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnuCloseActionPerformed(evt);
@@ -80,6 +84,19 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(mnuClose);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Compilador");
+
+        jMenuItem1.setText("Lexico");
+        jMenu2.add(jMenuItem1);
+
+        jMenuItem2.setText("Sintactico");
+        jMenu2.add(jMenuItem2);
+
+        jMenuItem3.setText("Semantico");
+        jMenu2.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -130,7 +147,11 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem mnuClean;

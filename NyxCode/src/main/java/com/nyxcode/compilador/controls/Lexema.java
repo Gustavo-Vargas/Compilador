@@ -4,7 +4,6 @@
  */
 package com.nyxcode.compilador.controls;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -28,23 +27,24 @@ public class Lexema {
     }
 
     private int selectToken(String palabra) {
-        int t = 0;
 
-        if (lstLex.containsValue(valor.toLowerCase())) {
-            //return lstLex.ge
+        if (lstLex.containsValue(palabra.toLowerCase())) {
+            for (Integer key : lstLex.keySet()) {
+                if (palabra.equalsIgnoreCase(lstLex.get(key))) {
+                    return key;
+                }
+            }
 
             //return lstLex.indexOf(palabra.toLowerCase());
         }
 
         try {
             Integer.parseInt(palabra);
-            return 100;
+            return 60;
 
         } catch (NumberFormatException e) {
-
+            return 0;
         }
-
-        return t;
 
     }
 
@@ -92,6 +92,18 @@ public class Lexema {
         lstLex.put(50, "id");
         lstLex.put(60, "num");
 
+    }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public int getToken() {
+        return token;
+    }
+
+    public short getLinea() {
+        return linea;
     }
 
 }

@@ -22,14 +22,12 @@ public class Procesos {
     // Variables o Attributos
     Principal v;
     ArrayList<String> lineas;
-    //ArrayList<String> lexemas;
     ArrayList<Lexema> lstLexemas;
 
     // Constructor o Constructores
     public Procesos(Principal v) {
         this.v = v;
         lineas = new ArrayList<>();
-        //lexemas = new ArrayList<>();
         lstLexemas = new ArrayList<>();
     }
 
@@ -63,19 +61,12 @@ public class Procesos {
             v.getTxtCode().append(linea + "\n");
         }
         procesaLineas();
-        
-//        for (String lexema : lexemas) {
-//            
-//            System.out.println(lexema);
-//        }
-
         for (Lexema lex : lstLexemas) {
             //System.out.println(lex.getValor());
             System.out.println("Valor: " + lex.getValor()
                     + ", Token: " + lex.getToken()
                     + ", Linea: " + lex.getLinea());
         }
-
     }
 
     private void clean() {
@@ -85,7 +76,9 @@ public class Procesos {
 
     // Protected  Se puede usar en el mismo paquete
     protected void procesaLineas() {
+        short noLineas = 0;
         for (String linea : lineas) {
+            noLineas++;
             forLineas:
             for (int i = 0; i < linea.length(); i++) {
                 char c = linea.charAt(i);
@@ -96,13 +89,13 @@ public class Procesos {
                         palabra += c;
                         i++;
                         if (i == linea.length()) {
-                            lstLexemas.add(new Lexema(palabra, (short) i));
+                            lstLexemas.add(new Lexema(palabra, noLineas));
                             //lexemas.add(palabra);
                             continue forLineas;
                         }
                         c = linea.charAt(i);
                     }
-                    lstLexemas.add(new Lexema(palabra, (short) i));
+                    lstLexemas.add(new Lexema(palabra, noLineas));
                     //lexemas.add(palabra);
                 }
                 if (Character.isDigit(c)) {
@@ -111,13 +104,13 @@ public class Procesos {
                         palabra += c;
                         i++;
                         if (i == linea.length()) {
-                            lstLexemas.add(new Lexema(palabra, (short) i));
+                            lstLexemas.add(new Lexema(palabra, noLineas));
                             //lexemas.add(palabra);
                             continue forLineas;
                         }
                         c = linea.charAt(i);
                     }
-                    lstLexemas.add(new Lexema(palabra, (short) i));
+                    lstLexemas.add(new Lexema(palabra, noLineas));
                     //lexemas.add(palabra);
                 }
                 if (c == '<' || c == '>' || c == '=') {
@@ -125,16 +118,15 @@ public class Procesos {
                     palabra += (i < linea.length() && linea.charAt(i + 1) == '=')
                             ? linea.charAt(i + 1) : "";
                     i++;
-                    lstLexemas.add(new Lexema(palabra, (short) i));
+                    lstLexemas.add(new Lexema(palabra, noLineas));
                     //lexemas.add(palabra);
                     continue;
                 }
-
                 if (c == '\n' || c == '\t' || c == ' ') {
                     continue;
                 }
                 palabra = "" + c;
-                lstLexemas.add(new Lexema(palabra, (short) i));
+                lstLexemas.add(new Lexema(palabra, noLineas));
                 //lexemas.add(palabra);
             }
         }

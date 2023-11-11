@@ -1,4 +1,3 @@
-
 package com.nyxcode.compilador.controls;
 
 import com.nyxcode.compilador.objetos.Lexema;
@@ -59,13 +58,7 @@ public class Procesos {
         for (String linea : lineas) {
             v.getTxtCode().append(linea + "\n");
         }
-        procesaLineas();
-        for (Lexema lex : lstLexemas) {
-            //System.out.println(lex.getValor());
-            System.out.println("Valor: " + lex.getValor()
-                    + ", Token: " + lex.getToken()/*
-                    + ", Linea: " + lex.getLinea()*/);
-        }
+
     }
 
     public void clean() {
@@ -73,59 +66,6 @@ public class Procesos {
         v.getTxtOutput().setText("");
         lineas.clear();
         lstLexemas.clear();
-    }
-
-    // Protected  Se puede usar en el mismo paquete
-    public /*protected*/ List<Lexema> procesaLineas() {
-        short noLineas = 0;
-        for (String linea : lineas) {
-            noLineas++;
-            forLineas:
-            for (int i = 0; i < linea.length(); i++) {
-                char c = linea.charAt(i);
-                String palabra;
-                if (Character.isLetter(c)) {
-                    palabra = "";
-                    while (Character.isLetterOrDigit(c) || c == '_') {
-                        palabra += c;
-                        i++;
-                        if (i == linea.length()) {
-                            lstLexemas.add(new Lexema(palabra, noLineas));
-                            continue forLineas;
-                        }
-                        c = linea.charAt(i);
-                    }
-                    lstLexemas.add(new Lexema(palabra, noLineas));
-                }
-                if (Character.isDigit(c)) {
-                    palabra = "";
-                    while (Character.isDigit(c)) {
-                        palabra += c;
-                        i++;
-                        if (i == linea.length()) {
-                            lstLexemas.add(new Lexema(palabra, noLineas));
-                            continue forLineas;
-                        }
-                        c = linea.charAt(i);
-                    }
-                    lstLexemas.add(new Lexema(palabra, noLineas));
-                }
-                if (c == '<' || c == '>' || c == '=') {
-                    palabra = "" + c;
-                    palabra += (i < linea.length() && linea.charAt(i + 1) == '=')
-                            ? linea.charAt(i + 1) : "";
-                    i++;
-                    lstLexemas.add(new Lexema(palabra, noLineas));
-                    continue;
-                }
-                if (c == '\n' || c == '\t' || c == ' ') {
-                    continue;
-                }
-                palabra = "" + c;
-                lstLexemas.add(new Lexema(palabra, noLineas));
-            }
-        }
-        return lstLexemas;
     }
 
 }

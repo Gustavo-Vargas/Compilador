@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package com.nyxcode.compilador.views;
 
+import com.nyxcode.compilador.controls.Lexico;
 import com.nyxcode.compilador.objetos.Lexema;
 import com.nyxcode.compilador.controls.Procesos;
 import com.nyxcode.compilador.controls.Sintaxis;
@@ -18,9 +16,11 @@ import javax.swing.JTextArea;
 public class Principal extends javax.swing.JFrame {
 
     Procesos p;
-    Sintaxis s = new Sintaxis();
+    Lexico lex;
+    Sintaxis sintax = new Sintaxis();
     private List<Lexema> lstLexema;
     private List<String> lstErrores;
+    private ArrayList<String> lineas;
     
     /**
      * Creates new form Principal
@@ -28,6 +28,7 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         p = new Procesos(this);
+        lex = new Lexico(this);
     }
 
     /**
@@ -136,7 +137,8 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mnuOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuOpenActionPerformed
-        ArrayList lineas = p.openFile();
+       // p.clean(lstErrores);
+        lineas = p.openFile();
     }//GEN-LAST:event_mnuOpenActionPerformed
 
     private void mnuCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCloseActionPerformed
@@ -148,8 +150,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuCleanActionPerformed
 
     private void mnuLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLexicoActionPerformed
-        lstLexema = p.procesaLineas();
-        lstErrores = s.porgrama(lstLexema, getTxtOutput());
+        lstLexema = lex.procesaLineas(lineas);
+        lstErrores = sintax.porgrama(lstLexema, getTxtOutput());
     }//GEN-LAST:event_mnuLexicoActionPerformed
 
     public JTextArea getTxtCode() {

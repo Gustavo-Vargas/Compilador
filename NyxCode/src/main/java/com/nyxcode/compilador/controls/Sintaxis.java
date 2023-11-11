@@ -4,6 +4,7 @@
  */
 package com.nyxcode.compilador.controls;
 
+import com.nyxcode.compilador.objetos.Lexema;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTextArea;

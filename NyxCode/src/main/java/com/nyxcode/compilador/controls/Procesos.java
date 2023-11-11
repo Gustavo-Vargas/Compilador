@@ -1,6 +1,7 @@
 
 package com.nyxcode.compilador.controls;
 
+import com.nyxcode.compilador.objetos.Lexema;
 import com.nyxcode.compilador.views.Principal;
 import java.io.BufferedReader;
 import java.io.File;

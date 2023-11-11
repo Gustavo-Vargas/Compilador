@@ -4,7 +4,7 @@
  */
 package com.nyxcode.compilador.views;
 
-import com.nyxcode.compilador.controls.Lexema;
+import com.nyxcode.compilador.objetos.Lexema;
 import com.nyxcode.compilador.controls.Procesos;
 import com.nyxcode.compilador.controls.Sintaxis;
 import java.util.ArrayList;

@@ -1,5 +1,5 @@
 
-package com.nyxcode.compilador.controls;
+package com.nyxcode.compilador.objetos;
 
 /**
  *

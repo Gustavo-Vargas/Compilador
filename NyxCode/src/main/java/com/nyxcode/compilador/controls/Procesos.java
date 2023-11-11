@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.nyxcode.compilador.controls;
 
 import com.nyxcode.compilador.views.Principal;
@@ -10,6 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -64,18 +62,20 @@ public class Procesos {
         for (Lexema lex : lstLexemas) {
             //System.out.println(lex.getValor());
             System.out.println("Valor: " + lex.getValor()
-                    + ", Token: " + lex.getToken()
-                    + ", Linea: " + lex.getLinea());
+                    + ", Token: " + lex.getToken()/*
+                    + ", Linea: " + lex.getLinea()*/);
         }
     }
 
-    private void clean() {
+    public void clean() {
         v.getTxtCode().setText("");
+        v.getTxtOutput().setText("");
         lineas.clear();
+        lstLexemas.clear();
     }
 
     // Protected  Se puede usar en el mismo paquete
-    protected void procesaLineas() {
+    public /*protected*/ List<Lexema> procesaLineas() {
         short noLineas = 0;
         for (String linea : lineas) {
             noLineas++;
@@ -90,13 +90,11 @@ public class Procesos {
                         i++;
                         if (i == linea.length()) {
                             lstLexemas.add(new Lexema(palabra, noLineas));
-                            //lexemas.add(palabra);
                             continue forLineas;
                         }
                         c = linea.charAt(i);
                     }
                     lstLexemas.add(new Lexema(palabra, noLineas));
-                    //lexemas.add(palabra);
                 }
                 if (Character.isDigit(c)) {
                     palabra = "";
@@ -105,13 +103,11 @@ public class Procesos {
                         i++;
                         if (i == linea.length()) {
                             lstLexemas.add(new Lexema(palabra, noLineas));
-                            //lexemas.add(palabra);
                             continue forLineas;
                         }
                         c = linea.charAt(i);
                     }
                     lstLexemas.add(new Lexema(palabra, noLineas));
-                    //lexemas.add(palabra);
                 }
                 if (c == '<' || c == '>' || c == '=') {
                     palabra = "" + c;
@@ -119,7 +115,6 @@ public class Procesos {
                             ? linea.charAt(i + 1) : "";
                     i++;
                     lstLexemas.add(new Lexema(palabra, noLineas));
-                    //lexemas.add(palabra);
                     continue;
                 }
                 if (c == '\n' || c == '\t' || c == ' ') {
@@ -127,9 +122,9 @@ public class Procesos {
                 }
                 palabra = "" + c;
                 lstLexemas.add(new Lexema(palabra, noLineas));
-                //lexemas.add(palabra);
             }
         }
+        return lstLexemas;
     }
 
 }

@@ -4,8 +4,11 @@
  */
 package com.nyxcode.compilador.views;
 
+import com.nyxcode.compilador.controls.Lexema;
 import com.nyxcode.compilador.controls.Procesos;
+import com.nyxcode.compilador.controls.Sintaxis;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JTextArea;
 
 /**
@@ -15,7 +18,10 @@ import javax.swing.JTextArea;
 public class Principal extends javax.swing.JFrame {
 
     Procesos p;
-
+    Sintaxis s = new Sintaxis();
+    private List<Lexema> lstLexema;
+    private List<String> lstErrores;
+    
     /**
      * Creates new form Principal
      */
@@ -43,7 +49,7 @@ public class Principal extends javax.swing.JFrame {
         mnuClean = new javax.swing.JMenuItem();
         mnuClose = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mnuLexico = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
 
@@ -87,8 +93,13 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu2.setText("Compilador");
 
-        jMenuItem1.setText("Lexico");
-        jMenu2.add(jMenuItem1);
+        mnuLexico.setText("Lexico");
+        mnuLexico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuLexicoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnuLexico);
 
         jMenuItem2.setText("Sintactico");
         jMenu2.add(jMenuItem2);
@@ -133,8 +144,13 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuCloseActionPerformed
 
     private void mnuCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCleanActionPerformed
-        
+        p.clean();
     }//GEN-LAST:event_mnuCleanActionPerformed
+
+    private void mnuLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLexicoActionPerformed
+        lstLexema = p.procesaLineas();
+        lstErrores = s.porgrama(lstLexema, getTxtOutput());
+    }//GEN-LAST:event_mnuLexicoActionPerformed
 
     public JTextArea getTxtCode() {
         return txtCode;
@@ -149,13 +165,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem mnuClean;
     private javax.swing.JMenuItem mnuClose;
+    private javax.swing.JMenuItem mnuLexico;
     private javax.swing.JMenuItem mnuOpen;
     private javax.swing.JTextArea txtCode;
     private javax.swing.JTextArea txtOutput;

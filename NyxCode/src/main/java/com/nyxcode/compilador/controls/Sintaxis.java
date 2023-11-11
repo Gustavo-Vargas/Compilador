@@ -5,6 +5,8 @@
 package com.nyxcode.compilador.controls;
 
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -12,14 +14,26 @@ import java.util.ArrayList;
  */
 public class Sintaxis {
 
+    Errores msjError = new Errores();
+    private List<String> lstErrores = new ArrayList<>();
+
+    private List<Lexema> lstLexema;
+    private Lexema lex;
+    private int indice;
+
 //    <Programa>::= <Bloque> .
-    public void porgrama(ArrayList<Lexema> lex) {
+    public List<String> porgrama(List<Lexema> lstLex, JTextArea txt_Errores) {
+        indice = 0;
+        lstLexema = lstLex;
+        lex = lstLexema.get(indice);
         bloque();
-        if (token != 500) {
-            Errores.mostrar(500);
+        if (lex.getToken() != 40) {
+            lstErrores.add(msjError.errores(40, lex.getLinea()));
         } else {
             System.out.println("Programa Correcto");
         }
+        mostrarLista(lstErrores, txt_Errores);
+        return lstErrores;
     }
 
 //<Bloque>::= <BlqConst> <BlqVar> <BlqProc> <Proposicion>
@@ -33,247 +47,245 @@ public class Sintaxis {
 //	<BlqConst>::= null
 //	<BlqConst>::= const <CilcloConst> ; 
     private void blqConst() {
-        if (token != 1) {
+        if (lex.getToken() != 1) {
             return;
         }
-        token = Tokens.nextToken();
+        lex = nextToken();
         cicloConst();
-        if (token != 501) {
-            Errores.mostrar(501);
+        if (lex.getToken() != 42) {
+            lstErrores.add(msjError.errores(42, lex.getLinea()));
             return;
         }
-        token = Tokens.nextToken();
+        lex = nextToken();
     }
 
 //	<BlqVar>::= ε
 //      <BlqVar> ::= var <CicloVar> ;
     private void blqVar() {
-        if (token != 2) {
+        if (lex.getToken() != 2) {
             return;
         }
-        token = Tokens.nextToken();
+        lex = nextToken();
         cicloVar();
-        if (token != 501) {
-            Errores.mostrar(501);
+        if (lex.getToken() != 42) {
+            lstErrores.add(msjError.errores(42, lex.getLinea()));
             return;
         }
-        token = Tokens.nextToken();
+        lex = nextToken();
     }
 
 //    <BlqProc>::= ε
-//    <BlqProc> ::=  proced (3)  id (100) ;(501) <Bloque> ; <BlqProc>
+//    <BlqProc> ::=  proced (3)  id (50) ;(42) <Bloque> ; <BlqProc>
     private void blqProc() {
-        if (token != 3) {
+        if (lex.getToken() != 3) {
             return;
         }
-        token = Tokens.nextToken();
-        if (token != 100) {
-            Errores.mostrar(100);
+        lex = nextToken();
+        if (lex.getToken() != 50) {
+            lstErrores.add(msjError.errores(50, lex.getLinea()));
             return;
         }
-        token = Tokens.nextToken();
-        if (token != 501) {
-            Errores.mostrar(501);
+        lex = nextToken();
+        if (lex.getToken() != 42) {
+            lstErrores.add(msjError.errores(42, lex.getLinea()));
             return;
         }
         bloque();
-        if (token != 501) {
-            Errores.mostrar(501);
+        if (lex.getToken() != 42) {
+            lstErrores.add(msjError.errores(42, lex.getLinea()));
             return;
         }
-        token = Tokens.nextToken();
+        lex = nextToken();
         blqProc();
     }
 
-//<CilcloConst>::= id(100) =(200) num(600) <AuxConst>
+//<CilcloConst>::= id(50) =(30) num(60) <AuxConst>
     private void cicloConst() {
-        if (token != 100) {
-            Errores.mostrar(100);
+        if (lex.getToken() != 50) {
+            lstErrores.add(msjError.errores(50, lex.getLinea()));;
             return;
         }
-        token = Tokens.nextToken();
-        if (token != 200) {
-            Errores.mostrar(200);
+        lex = nextToken();
+        if (lex.getToken() != 30) {
+            lstErrores.add(msjError.errores(30, lex.getLinea()));
             return;
         }
-        token = Tokens.nextToken();
-        if (token != 600) {
-            Errores.mostrar(600);
+        lex = nextToken();
+        if (lex.getToken() != 60) {
+            lstErrores.add(msjError.errores(60, lex.getLinea()));
             return;
         }
         auxConst();
     }
 
 //	<AuxConst>::= ε
-//	<AuxConst>::= ,(502) <CilcloConst>
+//	<AuxConst>::= ,(541) <CilcloConst>
     private void auxConst() {
-        if (token != 502) {
+        if (lex.getToken() != 41) {
             return;
         }
-        token = Tokens.nextToken();
+        lex = nextToken();
         cicloConst();
     }
 
 //	<CicloVar>::= id <AuxVar>
     private void cicloVar() {
-        if (token != 100) {
-            Errores.mostrar(100);
+        if (lex.getToken() != 50) {
+            lstErrores.add(msjError.errores(50, lex.getLinea()));
             return;
         }
-        token = Tokens.nextToken();
+        lex = nextToken();
         auxVar();
     }
 
 //    <AuxVar>::= , <CicloVar>
 //    <AuxVar>::= ε 
     private void auxVar() {
-        if (token != 502) {
+        if (lex.getToken() != 41) {
             return;
         }
-        token = Tokens.nextToken();
+        lex = nextToken();
         cicloVar();
     }
 
-    public void proposicion() {
-        switch (token) {
-            //<proposicion>::= BEGIN(4) <CicloProp> END(5)
+    private void proposicion() {
+        switch (lex.getToken()) {
+            //<proposicion>::= BEGIN(4) <CicloProp> END(15)
             case 4:
                 // duda si es cicloProp o BlqProc
                 cicloProp();
-                if (token != 5) {
-                    Errores.mostrar(5);
+                if (lex.getToken() != 15) {
+                    lstErrores.add(msjError.errores(15, lex.getLinea()));
                     return;
                 }
-                token = Tokens.nextToken();
+                lex = nextToken();
                 break;
 
-            //<proposicion>::= call (6) id (100)
-            case 6:
-                token = Tokens.nextToken();
-                if (token != 100) {
-                    Errores.mostrar(100);
+            //<proposicion>::= call (7) id (50)
+            case 7:
+                lex = nextToken();
+                if (lex.getToken() != 50) {
+                    lstErrores.add(msjError.errores(50, lex.getLinea()));
                     return;
                 }
-                token = Tokens.nextToken();
+                lex = nextToken();
                 break;
 
-            //<proposicion>::= id(100) =(200) <expre>
-            case 100:
-                token = Tokens.nextToken();
-                if (token != 200) {
-                    Errores.mostrar(200);
+            //<proposicion>::= id(50) =(30) <expre>
+            case 50:
+                lex = nextToken();
+                if (lex.getToken() != 30) {
+                    lstErrores.add(msjError.errores(30, lex.getLinea()));
                     return;
                 }
-                token = Tokens.nextToken();
+                lex = nextToken();
                 expre();
                 break;
 
-            //<proposicion>::= if(7) <condicion> then(8) <proposicion>
-            case 7:
-                token = Tokens.nextToken();
-                condicion()
-                :
-                if (token != 8) {
-                    Errores.mostrar(8);
+            //<proposicion>::= if(8) <condicion> then(10) <proposicion>
+            case 8:
+                lex = nextToken();
+                condicion();
+                if (lex.getToken() != 10) {
+                    lstErrores.add(msjError.errores(10, lex.getLinea()));
                     return;
                 }
-                token = Tokens.nextToken();
+                lex = nextToken();
                 proposicion();
                 break;
-            //<proposicion>::=  WHILE(9) <condicion> Do(10) <proposicion>
+            //<proposicion>::=  WHILE(9) <condicion> Do(11) <proposicion>
             case 9:
-                token = Tokens.nextToken();
+                lex = nextToken();
                 condicion();
-                if (token != 10) {
-                    Errores.mostrar(10);
+                if (lex.getToken() != 11) {
+                    lstErrores.add(msjError.errores(11, lex.getLinea()));
                     return;
                 }
-                token = Tokens.nextToken();
+                lex = nextToken();
                 proposicion();
                 break;
 
-            //<proposicion>::= for(11) id(100) =(200) <expre> <downto> <expre> Do(10) <proposicion>
-            case 11:
-                token = Tokens.nextToken();
-                if (token != 100) {
-                    Errores.mostrar(100);
+            //<proposicion>::= for(12) id(50) =(30) <expre> <downto> <expre> Do(10) <proposicion>
+            case 12:
+                lex = nextToken();
+                if (lex.getToken() != 50) {
+                    lstErrores.add(msjError.errores(50, lex.getLinea()));
                     return;
                 }
-                token = Tokens.nextToken();
-                if (token != 200) {
-                    Errores.mostrar(200);
+                lex = nextToken();
+                if (lex.getToken() != 30) {
+                    lstErrores.add(msjError.errores(30, lex.getLinea()));
                     return;
                 }
-                token = Tokens.nextToken();
+                lex = nextToken();
                 expre();
                 downto();
                 expre();
-                if (token != 10) {
-                    Errores.mostrar(10);
+                if (lex.getToken() != 11) {
+                    lstErrores.add(msjError.errores(11, lex.getLinea()));
                     return;
                 }
-                token = Tokens.nextToken();
+                lex = nextToken();
                 proposicion();
                 break;
 
-            //<proposicion>::= read(12) id(100)
-            case 12:
-                token = Tokens.nextToken();
-                if (token != 100) {
-                    Errores.mostrar(100);
+            //<proposicion>::= read(6) id(50)
+            case 6:
+                lex = nextToken();
+                if (lex.getToken() != 50) {
+                    lstErrores.add(msjError.errores(50, lex.getLinea()));
                     return;
                 }
-                token = Tokens.nextToken();
+                lex = nextToken();
                 break;
 
             //<proposicion>::= write(13) <idNum>
             case 13:
-                token = Tokens.nextToken();
+                lex = nextToken();
                 idNum();
                 break;
 
             default:
-                Errores.mostrar(0xFFF); // Error "Inicio de proposicion"    public void metodo(int .....)
+                lstErrores.add(msjError.errores(70, lex.getLinea()));
+                //Errores.mostrar(0xFFF); // Error "Inicio de proposicion"    public void metodo(int .....)
         }
     }
 
 //	
 // < CicloProp > ::= <proposicion> <AuxProp>
-    private void CicloProp() {
+    private void cicloProp() {
         proposicion();
-        AuxProp();
+        auxProp();
     }
 
 //       <AuxProp>::=  ε     
 //      <AuxProp>::=  ; <CicloProp>
-    private void AuxProp() {
-        if (token != 501) {
+    private void auxProp() {
+        if (lex.getToken() != 42) {
             return;
         }
-        token = Tokens.nextToken();
-        CicloProp();
+        lex = nextToken();
+        cicloProp();
     }
 
 //      <downto>::= to  
 //      <downto>::= dto 
     private void downto() {
-        if (token != 901 || token != 902) {
-            Errores.mostrar(901);
-            Errores.mostrar(902);
+        if (lex.getToken() != 13 || lex.getToken() != 14) {
+            lstErrores.add(msjError.errores(71, lex.getLinea()));
             return;
         }
-        token = Tokens.nextToken();
+        lex = nextToken();
     }
 
 //      <idNum>::= id
 //	<idNum>::= num  
     private void idNum() {
-        if (token != 100 || token != 600) {
-            Errores.mostrar(100);
-            Errores.mostrar(600);
+        if (lex.getToken() != 50 || lex.getToken() != 60) {
+            lstErrores.add(msjError.errores(74, lex.getLinea()));
             return;
         }
-        token = Tokens.nextToken();
+        lex = nextToken();
     }
 
 //      <expre>::= <termino> <AuxExpre>
@@ -292,10 +304,10 @@ public class Sintaxis {
 //      <expreOpera> ::= + 
 //	<expreOpera>::= -
     private void expreOpera() {
-        if (token != 601 || token != 602) {
+        if (lex.getToken() != 20 || lex.getToken() != 21) {
             return;
         }
-        token = Tokens.nextToken();
+        lex = nextToken();
     }
 
 //
@@ -315,10 +327,10 @@ public class Sintaxis {
 //      <terminoOpera>::= *
 //	<terminoOpera>::= /
     private void terminoOpera() {
-        if (token != 603 || token != 604) {
+        if (lex.getToken() != 22 || lex.getToken() != 23) {
             return;
         }
-        token = Tokens.nextToken();
+        lex = nextToken();
 
     }
 
@@ -326,40 +338,51 @@ public class Sintaxis {
 //<factor>::= id
 //<factor>::= num
     private void factor() {
-        if (token != 605 || token != 100 || token != 600) {
-            Errores.mostrar(605);
-            Errores.mostrar(100);
-            Errores.mostrar(600);
+        if (lex.getToken() != 43 || lex.getToken() != 50 || lex.getToken() != 60) {
+            lstErrores.add(msjError.errores(74, lex.getLinea()));
             return;
         }
-        token = Tokens.nextToken();
+        lex = nextToken();
     }
 
 //   <condicion>::= <expre> <operadores> <expre>
-    private void condcion() {
+    private void condicion() {
         expre();
         operadores();
         expre();
     }
 
-    //	<operadores>::= == (606)
-//	<operadores>::= != (607)
-//	<operadores>::= <  (608)
-//	<operadores>::= >  (609)
-//	<operadores>::= <= (610)
-//	<operadores>::= >= (611)
+    //	<operadores>::= == (31)
+//	<operadores>::= != (32)
+//	<operadores>::= <  (33)
+//	<operadores>::= >  (35)
+//	<operadores>::= <= (34)
+//	<operadores>::= >= (36)
     private void operadores() {
-        if (token != 606 || token != 607 || token != 608
-                || token != 609 || token != 610 || token != 611) {
-            Errores.mostrar(606);
-            Errores.mostrar(607);
-            Errores.mostrar(608);
-            Errores.mostrar(609);
-            Errores.mostrar(610);
-            Errores.mostrar(611);
+        if (lex.getToken() != 31 || lex.getToken() != 32
+                || lex.getToken() != 33 || lex.getToken() != 35
+                || lex.getToken() != 34 || lex.getToken() != 36) {
+            lstErrores.add(msjError.errores(72, lex.getLinea()));
             return;
         }
-        token = Tokens.nextToken();
+        lex = nextToken();
+    }
+
+    private Lexema nextToken() {
+        if (indice < lstLexema.size()) {
+            indice++;
+            Lexema lexema = lstLexema.get(indice);
+            return lexema;
+        }
+        return null;
+    }
+
+    private void mostrarLista(List<String> lstmensajes, JTextArea txtArea) {
+        txtArea.setText("");
+
+        for (String mensaje : lstmensajes) {
+            txtArea.append(mensaje);
+        }
     }
 
 }

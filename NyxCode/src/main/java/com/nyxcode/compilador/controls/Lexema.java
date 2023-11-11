@@ -17,7 +17,10 @@ public class Lexema {
     private int token;
     private short linea;
 
-    private Map<Integer, String> lstLex;
+    public Map<Integer, String> lstLex;
+
+    public Lexema() {
+    }
 
     public Lexema(String valor, short linea) {
         this.valor = valor;
@@ -28,14 +31,13 @@ public class Lexema {
 
     private int selectToken(String palabra) {
 
+        // esta validando solamente a la palabra y no a la lista de lexemas
         if (lstLex.containsValue(palabra.toLowerCase())) {
             for (Integer key : lstLex.keySet()) {
-                if (palabra.equalsIgnoreCase(lstLex.get(key))) {
+                if (palabra.equals(lstLex.get(key).toLowerCase())) {
                     return key;
                 }
             }
-
-            //return lstLex.indexOf(palabra.toLowerCase());
         }
 
         try {
@@ -43,29 +45,29 @@ public class Lexema {
             return 60;
 
         } catch (NumberFormatException e) {
-            return 0;
+            return 50;
         }
 
     }
 
-    private void listLexemas() {
+    public void listLexemas() {
         lstLex = new TreeMap<Integer, String>();
         // Palabras Reservadas
-        lstLex.put(1, "Const");
-        lstLex.put(2, "Var");
-        lstLex.put(3, "Proced");
-        lstLex.put(4, "Begin");
-        lstLex.put(5, "Write");
-        lstLex.put(6, "Read");
-        lstLex.put(7, "Call");
-        lstLex.put(8, "If");
-        lstLex.put(9, "While");
-        lstLex.put(10, "Then");
-        lstLex.put(11, "Do");
-        lstLex.put(12, "For");
-        lstLex.put(13, "To");
-        lstLex.put(14, "Dto");
-        lstLex.put(15, "End");
+        lstLex.put(1, "const");
+        lstLex.put(2, "var");
+        lstLex.put(3, "proced");
+        lstLex.put(4, "begin");
+        lstLex.put(5, "write");
+        lstLex.put(6, "read");
+        lstLex.put(7, "call");
+        lstLex.put(8, "if");
+        lstLex.put(9, "while");
+        lstLex.put(10, "then");
+        lstLex.put(11, "do");
+        lstLex.put(12, "for");
+        lstLex.put(13, "to");
+        lstLex.put(14, "dto");
+        lstLex.put(15, "end");
 
         // Operadores
         lstLex.put(20, "+");

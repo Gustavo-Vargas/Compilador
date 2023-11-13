@@ -1,6 +1,6 @@
-
 package com.nyxcode.compilador.views;
 
+import com.nyxcode.compilador.controls.Ensamblador;
 import com.nyxcode.compilador.controls.Lexico;
 import com.nyxcode.compilador.objetos.Lexema;
 import com.nyxcode.compilador.controls.Procesos;
@@ -18,10 +18,11 @@ public class Principal extends javax.swing.JFrame {
     Procesos p;
     Lexico lex;
     Sintaxis sintax = new Sintaxis();
+
     private List<Lexema> lstLexema;
     private List<String> lstErrores;
     private ArrayList<String> lineas;
-    
+
     /**
      * Creates new form Principal
      */
@@ -53,6 +54,8 @@ public class Principal extends javax.swing.JFrame {
         mnuLexico = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        mnuCrearArchivo = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,6 +113,18 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setText("Ensamblador");
+
+        mnuCrearArchivo.setText("Crear");
+        mnuCrearArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCrearArchivoActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mnuCrearArchivo);
+
+        jMenuBar1.add(jMenu3);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -137,7 +152,7 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mnuOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuOpenActionPerformed
-       // p.clean(lstErrores);
+        // p.clean(lstErrores);
         lineas = p.openFile();
     }//GEN-LAST:event_mnuOpenActionPerformed
 
@@ -154,6 +169,11 @@ public class Principal extends javax.swing.JFrame {
         lstErrores = sintax.porgrama(lstLexema, getTxtOutput());
     }//GEN-LAST:event_mnuLexicoActionPerformed
 
+    private void mnuCrearArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCrearArchivoActionPerformed
+        Ensamblador ensam = new Ensamblador(sintax);
+
+    }//GEN-LAST:event_mnuCrearArchivoActionPerformed
+
     public JTextArea getTxtCode() {
         return txtCode;
     }
@@ -166,6 +186,7 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
@@ -173,6 +194,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem mnuClean;
     private javax.swing.JMenuItem mnuClose;
+    private javax.swing.JMenuItem mnuCrearArchivo;
     private javax.swing.JMenuItem mnuLexico;
     private javax.swing.JMenuItem mnuOpen;
     private javax.swing.JTextArea txtCode;

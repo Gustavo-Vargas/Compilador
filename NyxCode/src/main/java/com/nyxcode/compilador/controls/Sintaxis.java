@@ -4,9 +4,12 @@
  */
 package com.nyxcode.compilador.controls;
 
+import com.nyxcode.compilador.objetos.Cuadruplos;
+import com.nyxcode.compilador.objetos.Identificador;
 import com.nyxcode.compilador.objetos.Lexema;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import javax.swing.JTextArea;
 
 /**
@@ -16,14 +19,22 @@ import javax.swing.JTextArea;
 public class Sintaxis {
 
     Errores msjError = new Errores();
-    private List<String> lstErrores = new ArrayList<>();
-
-    private List<Lexema> lstLexema;
     private Lexema lex;
     private int indice;
 
+    // Listas
+    ArrayList<Identificador> lstIdent;
+    ArrayList<Cuadruplos> lstCuadruplos;
+    private List<String> lstErrores = new ArrayList<>();
+    private List<Lexema> lstLexema;
+
+    // Pilas
+    private Stack<Character> operadores = new Stack();
+    private Stack<Character> operandos = new Stack();
+
 //    <Programa>::= <Bloque> .
     public List<String> porgrama(List<Lexema> lstLex, JTextArea txt_Errores) {
+        lstErrores.clear();
         indice = 0;
         lstLexema = lstLex;
         lex = lstLexema.get(indice);
@@ -248,7 +259,7 @@ public class Sintaxis {
 
             default:
                 lstErrores.add(msjError.errores(70, lex.getLinea()));
-                //Errores.mostrar(0xFFF); // Error "Inicio de proposicion"    public void metodo(int .....)
+            //Errores.mostrar(0xFFF); // Error "Inicio de proposicion"    public void metodo(int .....)
         }
     }
 

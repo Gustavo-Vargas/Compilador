@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -34,11 +33,12 @@ public class Procesos {
     public ArrayList<String> openFile() {
         clean();
         String linea = "";
-        JFileChooser seleccionar = new JFileChooser();
-        seleccionar.setCurrentDirectory(new File(".\\")); // Establece el directorio actual
-        int result = seleccionar.showOpenDialog(null);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File archivo = seleccionar.getSelectedFile();
+//        JFileChooser seleccionar = new JFileChooser();
+//        seleccionar.setCurrentDirectory(new File(".\\")); // Establece el directorio actual
+//        int result = seleccionar.showOpenDialog(null);
+//        if (result == JFileChooser.APPROVE_OPTION) {
+            //File archivo = seleccionar.getSelectedFile();
+            File archivo = new File(".\\Ejemplo.pl0");
             try {
                 BufferedReader br = new BufferedReader(new FileReader(archivo));
                 while ((linea = br.readLine()) != null) {
@@ -50,7 +50,8 @@ public class Procesos {
                         "ERRIR! \n" + e,
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }
+//        }
+
         return lineas;
     }
 

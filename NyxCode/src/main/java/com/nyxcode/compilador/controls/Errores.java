@@ -73,25 +73,25 @@ public class Errores {
                 break;
 
             case 72:
-                mensaje = ("Error 75: Se se esperaba un \"==\", "
+                mensaje = ("Error 72: Se se esperaba un \"==\", "
                         + "\"!=\", \"<\", \">\", \"<=\" o \">=\",  "
                         + ": " + renglon + " \n");
                 break;
 
             case 73:
-                mensaje = ("Error 74: Se se esperaba un "
+                mensaje = ("Error 73: Se se esperaba un "
                         + "\"identificador\" 0 un \"número\"  "
                         + ": " + renglon + " \n");
                 break;
                 
             case 74:
-                mensaje = ("Error 72: Se se esperaba un \"(\","
+                mensaje = ("Error 74: Se se esperaba un \"(\","
                         + " \"identificador\" o un \"número\"  "
                         + ": " + renglon + " \n");
                 break;
 
             case 75:
-                mensaje = ("Error 73: Se se esperaba un \"begin\", "
+                mensaje = ("Error 75: Se se esperaba un \"begin\", "
                         + "\"id\", \"write\", \"read\", \"call\", \"if\", "
                         + "\"while\" o \"for\"  : " + renglon + " \n");
                 break;

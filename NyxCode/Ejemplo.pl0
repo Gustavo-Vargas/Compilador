@@ -1,4 +1,21 @@
-const hola;
-var y
-x+2*58>=(3.1416);
-adios.
+const max=100,min=5;
+var aux,cont;
+begin
+ read aux;
+ if aux/2 > 0 then
+   for aux/2 to max-min do
+     begin
+       read conta;
+       while conta < aux * 2 do
+       begin
+        write conta;
+        write aux;
+        conta=conta+1
+      end
+    end;
+  write conta
+end.
+ 
+
+
+

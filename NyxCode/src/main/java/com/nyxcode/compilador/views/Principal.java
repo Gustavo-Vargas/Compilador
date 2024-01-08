@@ -17,10 +17,9 @@ public class Principal extends javax.swing.JFrame {
 
     Procesos p;
     Lexico lex;
-    Sintaxis sintax = new Sintaxis();
+    Sintaxis sintax;
 
     private List<Lexema> lstLexema;
-    private List<String> lstErrores;
     private ArrayList<String> lineas;
 
     /**
@@ -30,6 +29,7 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         p = new Procesos(this);
         lex = new Lexico(this);
+        sintax = new Sintaxis(this);
     }
 
     /**
@@ -58,6 +58,7 @@ public class Principal extends javax.swing.JFrame {
         mnuCrearArchivo = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(0, 0));
 
         txtCode.setColumns(20);
         txtCode.setRows(5);
@@ -134,8 +135,8 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -144,16 +145,17 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void mnuOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuOpenActionPerformed
         // p.clean(lstErrores);
-        lineas = p.openFile();
+        /*lineas = */p.openFile();
     }//GEN-LAST:event_mnuOpenActionPerformed
 
     private void mnuCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCloseActionPerformed
@@ -165,8 +167,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuCleanActionPerformed
 
     private void mnuLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuLexicoActionPerformed
+        lineas = lex.leeLineas(txtCode);
         lstLexema = lex.procesaLineas(lineas);
-        lstErrores = sintax.porgrama(lstLexema, getTxtOutput());
+        sintax.porgrama(lstLexema);
     }//GEN-LAST:event_mnuLexicoActionPerformed
 
     private void mnuCrearArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCrearArchivoActionPerformed

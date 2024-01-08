@@ -49,9 +49,9 @@
 	<idNum>::= num
 	<idExpre>::=  id = <expre>
 	
-	<prop>::= <proposicion> <propSub>
-	<propSub>::= ε
-	<propSub>::= ; <prop>
+	<BlqProc>::= <proposicion> <auxProp>
+	<auxProp>::= ε
+	<auxProp>::= ; <prop>
 
 <expre>::= <termino> <expreSub>
 	<expreSub>::= <expreOpera> <expre>

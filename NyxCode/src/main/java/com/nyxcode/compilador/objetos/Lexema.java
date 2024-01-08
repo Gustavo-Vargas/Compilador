@@ -27,11 +27,10 @@ public class Lexema {
     }
 
     private int selectToken(String palabra) {
-
         // esta validando solamente a la palabra y no a la lista de lexemas
         if (lstLex.containsValue(palabra.toLowerCase())) {
             for (Integer key : lstLex.keySet()) {
-                if (palabra.equals(lstLex.get(key).toLowerCase())) {
+                if (palabra.toLowerCase().equals(lstLex.get(key))) {
                     return key;
                 }
             }
